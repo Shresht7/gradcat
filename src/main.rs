@@ -1,3 +1,9 @@
+// Modules
+mod colors;
+
+// Traits
+use colors::RGBColor;
+
 /// Command-Line Arguments
 struct Args {
     /// A vector containing all the file-paths to read
@@ -69,13 +75,15 @@ fn cat(reader: impl std::io::BufRead) {
 
 /// Style the characters and print-out the line
 fn print_line(line: String) {
+    let start_color = colors::RGB(255, 0, 0); // Red
+    let end_color = colors::RGB(0, 0, 255); // Blue
+
+    let length = line.chars().count();
     for (i, char) in line.chars().enumerate() {
-        if i % 2 == 0 {
-            print!("\x1b[31m");
-        } else {
-            print!("\x1b[32m");
-        }
-        print!("{}", char)
+        let factor = i as f32 / (length - 1) as f32;
+        let color = colors::interpolate_linear_gradient(&start_color, &end_color, factor);
+        print!("{}{}", color.ansi_code(), char)
     }
+
     print!("\n"); // End the line with a new-line character
 }
