@@ -1,36 +1,51 @@
 // Modules
 mod colors;
 
-// Traits
-use colors::RGBColor;
+// Library
+use colors::{RGBColor, RGB};
 
 /// ANSI Escape code to reset the styles
 const ANSI_RESET: &str = "\x1b[0m";
 
 /// Command-Line Arguments
+#[derive(Default)]
 struct Args {
     /// A vector containing all the file-paths to read
     files: Vec<std::path::PathBuf>,
+    /// Gradient's starting color
+    start_color: RGB<u8>,
+    /// Gradient's ending color
+    end_color: RGB<u8>,
 }
 
 impl Args {
+    /// Initialize the struct with default values
+    fn default() -> Self {
+        Self {
+            start_color: RGB(255, 0, 0),
+            end_color: RGB(0, 0, 255),
+            ..Default::default()
+        }
+    }
+
     /// Parse the command-line arguments
     fn parse() -> Self {
         // Get the command line arguments
         let mut args = std::env::args();
         args.next(); // Consume the path to the executable
 
+        let mut itself = Args::default();
+
         // Collect all valid file-paths
-        let mut files = Vec::new();
         while let Some(arg) = args.next() {
             let path = std::path::PathBuf::from(arg);
             if std::path::Path::exists(&path) {
-                files.push(path);
+                itself.files.push(path);
             }
         }
 
         // Return self
-        Self { files }
+        itself
     }
 }
 
@@ -87,13 +102,14 @@ impl App {
 
     /// Style the characters and print-out the line
     fn print_line(&self, line: String) {
-        let start_color = colors::RGB(255, 0, 0); // Red
-        let end_color = colors::RGB(0, 0, 255); // Blue
-
         let length = line.chars().count();
         for (i, char) in line.chars().enumerate() {
             let factor = i as f32 / (length - 1) as f32;
-            let color = colors::interpolate_linear_gradient(&start_color, &end_color, factor);
+            let color = colors::interpolate_linear_gradient(
+                &self.args.start_color,
+                &self.args.end_color,
+                factor,
+            );
             print!("{}{}", color.ansi_code(), char)
         }
 

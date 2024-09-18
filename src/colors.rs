@@ -2,7 +2,7 @@ use std::fmt::Display;
 use std::str::FromStr;
 
 /// Holds the RGB values of a color
-#[derive(Debug, PartialEq)]
+#[derive(Debug, Default, PartialEq)]
 pub struct RGB<T>(pub T, pub T, pub T);
 
 pub trait RGBColor<T> {
