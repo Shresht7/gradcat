@@ -25,8 +25,33 @@ impl Args {
     }
 }
 
-fn main() {
+/// The main entrypoint of the application
+fn main() -> Result<(), Box<dyn std::error::Error>> {
     // Parse the command line arguments
     let args = Args::parse();
-    println!("{:#?}", args.files)
+
+    // If no files were specified in the cli arguments ...
+    if args.files.len() == 0 {
+        // ...Read from stdin
+        let reader = std::io::stdin().lock();
+        cat(reader)
+    } else {
+        // Otherwise, read the specified files
+        for filepath in args.files {
+            let file = std::fs::File::open(filepath)?;
+            let reader = std::io::BufReader::new(file);
+            cat(reader)
+        }
+    };
+
+    Ok(())
+}
+
+/// Cat out the contents read
+fn cat(reader: impl std::io::BufRead) {
+    for line in reader.lines() {
+        if let Ok(line) = line {
+            println!("{line}")
+        }
+    }
 }
