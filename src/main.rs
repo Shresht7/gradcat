@@ -26,10 +26,18 @@ impl Args {
 }
 
 /// The main entrypoint of the application
-fn main() -> Result<(), Box<dyn std::error::Error>> {
+fn main() {
     // Parse the command line arguments
     let args = Args::parse();
+    // Run the command line application
+    if let Err(e) = run(args) {
+        eprintln!("Error: {}", e);
+        std::process::exit(1);
+    }
+}
 
+/// Run the command-line application
+fn run(args: Args) -> Result<(), Box<dyn std::error::Error>> {
     // If no files were specified in the cli arguments ...
     if args.files.len() == 0 {
         // ...Read from stdin
@@ -43,7 +51,6 @@ fn main() -> Result<(), Box<dyn std::error::Error>> {
             cat(reader)
         }
     };
-
     Ok(())
 }
 
