@@ -54,6 +54,9 @@ fn run(args: Args) -> Result<(), Box<dyn std::error::Error>> {
     Ok(())
 }
 
+/// ANSI Escape code to reset the styles
+const ANSI_RESET: &str = "\x1b[0m";
+
 /// Cat out the contents read
 fn cat(reader: impl std::io::BufRead) {
     for line in reader.lines() {
@@ -61,11 +64,17 @@ fn cat(reader: impl std::io::BufRead) {
             print_line(line);
         }
     }
+    print!("{}", ANSI_RESET);
 }
 
 /// Style the characters and print-out the line
 fn print_line(line: String) {
-    for (_, char) in line.chars().enumerate() {
+    for (i, char) in line.chars().enumerate() {
+        if i % 2 == 0 {
+            print!("\x1b[31m");
+        } else {
+            print!("\x1b[32m");
+        }
         print!("{}", char)
     }
     print!("\n"); // End the line with a new-line character
