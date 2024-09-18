@@ -4,6 +4,9 @@ mod colors;
 // Traits
 use colors::RGBColor;
 
+/// ANSI Escape code to reset the styles
+const ANSI_RESET: &str = "\x1b[0m";
+
 /// Command-Line Arguments
 struct Args {
     /// A vector containing all the file-paths to read
@@ -35,55 +38,65 @@ impl Args {
 fn main() {
     // Parse the command line arguments
     let args = Args::parse();
+    // Instantiate the application
+    let app = App::from(args);
     // Run the command line application
-    if let Err(e) = run(args) {
+    if let Err(e) = app.run() {
         eprintln!("Error: {}", e);
         std::process::exit(1);
     }
 }
 
-/// Run the command-line application
-fn run(args: Args) -> Result<(), Box<dyn std::error::Error>> {
-    // If no files were specified in the cli arguments ...
-    if args.files.len() == 0 {
-        // ...Read from stdin
-        let reader = std::io::stdin().lock();
-        cat(reader)
-    } else {
-        // Otherwise, read the specified files
-        for filepath in args.files {
-            let file = std::fs::File::open(filepath)?;
-            let reader = std::io::BufReader::new(file);
-            cat(reader)
-        }
-    };
-    Ok(())
+struct App {
+    args: Args,
 }
 
-/// ANSI Escape code to reset the styles
-const ANSI_RESET: &str = "\x1b[0m";
+impl App {
+    /// Instantiate the application from the command-line arguments
+    fn from(args: Args) -> Self {
+        Self { args }
+    }
 
-/// Cat out the contents read
-fn cat(reader: impl std::io::BufRead) {
-    for line in reader.lines() {
-        if let Ok(line) = line {
-            print_line(line);
+    /// Run the command-line application
+    fn run(&self) -> Result<(), Box<dyn std::error::Error>> {
+        // If no files were specified in the cli arguments ...
+        if self.args.files.len() == 0 {
+            // ...Read from stdin
+            let reader = std::io::stdin().lock();
+            self.cat(reader)
+        } else {
+            // Otherwise, read the specified files
+            for filepath in &self.args.files {
+                let file = std::fs::File::open(filepath)?;
+                let reader = std::io::BufReader::new(file);
+                self.cat(reader)
+            }
+        };
+        Ok(())
+    }
+
+    /// Cat out the contents read
+    fn cat(&self, reader: impl std::io::BufRead) {
+        for line in reader.lines() {
+            if let Ok(line) = line {
+                self.print_line(line);
+            }
         }
-    }
-    print!("{}", ANSI_RESET);
-}
-
-/// Style the characters and print-out the line
-fn print_line(line: String) {
-    let start_color = colors::RGB(255, 0, 0); // Red
-    let end_color = colors::RGB(0, 0, 255); // Blue
-
-    let length = line.chars().count();
-    for (i, char) in line.chars().enumerate() {
-        let factor = i as f32 / (length - 1) as f32;
-        let color = colors::interpolate_linear_gradient(&start_color, &end_color, factor);
-        print!("{}{}", color.ansi_code(), char)
+        print!("{}", ANSI_RESET);
     }
 
-    print!("\n"); // End the line with a new-line character
+    /// Style the characters and print-out the line
+    fn print_line(&self, line: String) {
+        let start_color = colors::RGB(255, 0, 0); // Red
+        let end_color = colors::RGB(0, 0, 255); // Blue
+
+        let length = line.chars().count();
+        for (i, char) in line.chars().enumerate() {
+            let factor = i as f32 / (length - 1) as f32;
+            let color = colors::interpolate_linear_gradient(&start_color, &end_color, factor);
+            print!("{}{}", color.ansi_code(), char)
+        }
+
+        print!("\n"); // End the line with a new-line character
+    }
 }
