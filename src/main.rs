@@ -58,7 +58,15 @@ fn run(args: Args) -> Result<(), Box<dyn std::error::Error>> {
 fn cat(reader: impl std::io::BufRead) {
     for line in reader.lines() {
         if let Ok(line) = line {
-            println!("{line}")
+            print_line(line);
         }
     }
+}
+
+/// Style the characters and print-out the line
+fn print_line(line: String) {
+    for (_, char) in line.chars().enumerate() {
+        print!("{}", char)
+    }
+    print!("\n"); // End the line with a new-line character
 }
