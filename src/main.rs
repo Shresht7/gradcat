@@ -105,11 +105,12 @@ impl App {
         let length = line.chars().count();
         for (i, char) in line.chars().enumerate() {
             let factor = i as f32 / (length - 1) as f32;
-            let color = colors::interpolate_linear_gradient(
-                &self.args.start_color,
-                &self.args.end_color,
-                factor,
-            );
+            // let color = colors::interpolate_linear_gradient(
+            //     &self.args.start_color,
+            //     &self.args.end_color,
+            //     factor,
+            // );
+            let color = colors::rainbow(factor);
             print!("{}{}", color.ansi_code(), char)
         }
 

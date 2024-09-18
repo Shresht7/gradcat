@@ -60,6 +60,25 @@ pub fn interpolate_linear_gradient(start: &RGB<u8>, end: &RGB<u8>, factor: f32) 
     RGB(r.round() as u8, g.round() as u8, b.round() as u8)
 }
 
+pub fn rainbow(factor: f32) -> RGB<u8> {
+    let frequency = 1.0; // Frequency of the sine wave. Higher values result in more rapid color changes.
+    let spread = 3.0;
+    let i = factor * spread; // The current index, used to calculate the position on the sine wave.
+
+    let amplitude = 127.0; // Amplitude of the sine wave. Describe the magnitude of the color.
+    let shift_offset = 128.0; // Shifts the entire sine wave up so that it oscillates between 0 and 255 (128 + 127)
+
+    let phase_r = (0.0 / 3.0) * std::f32::consts::PI; // The phase shift for red (0 or 360deg)
+    let phase_g = (2.0 / 3.0) * std::f32::consts::PI; // The phase shift for green (2/3 PI = 120deg)
+    let phase_b = (4.0 / 3.0) * std::f32::consts::PI; // The phase shift for blue (4/3 PI = 240 deg)
+
+    // Calculate the RGB values
+    let r = (amplitude * (frequency * i + phase_r).sin() + shift_offset) as u8;
+    let g = (amplitude * (frequency * i + phase_g).sin() + shift_offset) as u8;
+    let b = (amplitude * (frequency * i + phase_b).sin() + shift_offset) as u8;
+    RGB(r, g, b)
+}
+
 // -----------
 // PARSE COLOR
 // -----------
