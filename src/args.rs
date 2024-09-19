@@ -13,6 +13,9 @@ pub struct Args {
     pub start_color: RGB<u8>,
     /// Gradient's ending color
     pub end_color: RGB<u8>,
+
+    pub show_help: bool,
+    pub show_version: bool,
 }
 
 impl Args {
@@ -69,7 +72,38 @@ impl Args {
             itself.mode = mode.into();
         }
 
+        if options.contains_key("help") {
+            itself.show_help = true;
+        }
+
+        if options.contains_key("version") {
+            itself.show_version = true;
+        }
+
         // Return self
         itself
+    }
+
+    pub fn help_message(&self) -> String {
+        let mut help_message = String::new();
+
+        help_message.push_str("Usage: gradcat [FILES...] [OPTIONS]\n");
+        help_message.push_str("\n");
+        help_message.push_str("Options: \n");
+        help_message.push_str("\t--mode <mode>\tSet the gradient mode (rainbow, linear)\n");
+        help_message
+            .push_str("\t--start-color <#color>\tSet the start color for the linear gradient\n");
+        help_message
+            .push_str("\t--end-color <#color>\tSet the end color for the linear gradient\n");
+        help_message.push_str("\n");
+        help_message.push_str("\n");
+        help_message.push_str("\t--help\tDisplay this help message\n");
+        help_message.push_str("\t--version\tDisplay the version number\n");
+
+        help_message
+    }
+
+    pub fn version(&self) -> String {
+        format!("v{}", "0.1.0")
     }
 }

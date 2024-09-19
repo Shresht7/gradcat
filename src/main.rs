@@ -34,6 +34,16 @@ impl App {
 
     /// Run the command-line application
     fn run(&self) -> Result<(), Box<dyn std::error::Error>> {
+        if self.args.show_help {
+            print!("{}", self.args.help_message());
+            return Ok(());
+        }
+
+        if self.args.show_version {
+            print!("{}", self.args.version());
+            return Ok(());
+        }
+
         // If no files were specified in the cli arguments ...
         if self.args.files.len() == 0 {
             // ...Read from stdin
