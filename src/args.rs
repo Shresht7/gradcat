@@ -107,15 +107,20 @@ impl Args {
         help_message.push_str("Usage: gradcat [FILES...] [OPTIONS]\n");
         help_message.push_str("\n");
         help_message.push_str("Options: \n");
-        help_message.push_str("\t--mode <mode>\tSet the gradient mode (rainbow, linear)\n");
+        help_message.push_str("  --mode <mode>\tSet the gradient mode (rainbow, linear)\n");
+        help_message.push_str("\n");
         help_message
-            .push_str("\t--start-color <#color>\tSet the start color for the linear gradient\n");
+        .push_str("  --frequency <#color>\tRainbow gradient's sine-wave frequency (Higher values cause faster change in the pattern)\n");
+        help_message.push_str("  --spread <#color>\tRainbow gradient's spread value\n");
+        help_message.push_str("\n");
         help_message
-            .push_str("\t--end-color <#color>\tSet the end color for the linear gradient\n");
+            .push_str("  --start-color <#color>\tSet the start color for the linear gradient\n");
+        help_message
+            .push_str("  --end-color <#color>\tSet the end color for the linear gradient\n");
         help_message.push_str("\n");
         help_message.push_str("\n");
-        help_message.push_str("\t--help\tDisplay this help message\n");
-        help_message.push_str("\t--version\tDisplay the version number\n");
+        help_message.push_str("  --help\tDisplay this help message\n");
+        help_message.push_str("  --version\tDisplay the version number\n");
 
         help_message
     }
