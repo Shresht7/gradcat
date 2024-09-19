@@ -15,6 +15,8 @@ pub struct Args {
     pub frequency: f32,
     /// Rainbow gradient's spread value
     pub spread: f32,
+    /// The starting offset value to shift the gradient's starting position
+    pub offset: f32,
 
     /// Gradient's starting color
     pub start_color: RGB<u8>,
@@ -74,6 +76,10 @@ impl Args {
 
         if let Some(spread) = options.get("spread") {
             itself.spread = spread.parse().expect("Invalid spread value");
+        }
+
+        if let Some(offset) = options.get("offset") {
+            itself.offset = offset.parse().expect("Invalid offset value");
         }
 
         // Parse options
