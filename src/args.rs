@@ -1,11 +1,13 @@
 // Library
-use crate::colors::RGB;
+use crate::colors::{GradientMode, RGB};
 
 /// Command-Line Arguments
 #[derive(Default)]
 pub struct Args {
     /// A vector containing all the file-paths to read
     pub files: Vec<std::path::PathBuf>,
+    /// Operations Mode
+    pub mode: GradientMode,
     /// Gradient's starting color
     pub start_color: RGB<u8>,
     /// Gradient's ending color

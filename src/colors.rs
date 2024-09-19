@@ -42,6 +42,14 @@ where
     }
 }
 
+/// The modes of gradient colors
+#[derive(Default)]
+pub enum GradientMode {
+    #[default]
+    Rainbow,
+    Linear,
+}
+
 /// Calculate the delta between the two RGB colors
 fn calculate_delta(start: &RGB<u8>, end: &RGB<u8>) -> RGB<f32> {
     RGB(

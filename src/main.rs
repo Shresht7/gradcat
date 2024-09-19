@@ -65,12 +65,17 @@ impl App {
         let length = line.chars().count();
         for (i, char) in line.chars().enumerate() {
             let factor = i as f32 / (length - 1) as f32;
-            // let color = colors::interpolate_linear_gradient(
-            //     &self.args.start_color,
-            //     &self.args.end_color,
-            //     factor,
-            // );
-            let color = colors::rainbow(factor);
+
+            //  Determine the color to style the character
+            let color = match self.args.mode {
+                colors::GradientMode::Rainbow => colors::rainbow(factor),
+                colors::GradientMode::Linear => colors::interpolate_linear_gradient(
+                    &self.args.start_color,
+                    &self.args.end_color,
+                    factor,
+                ),
+            };
+
             print!("{}{}", color.ansi_code(), char)
         }
 
