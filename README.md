@@ -1,6 +1,6 @@
 # 🌈 `gradcat` 🐈
 
-A [lolcat][lolcat] clone. 'Cuz why not?
+A [`lolcat`][lolcat] clone. 'Cuz why not?
 
 <!-- TODO: Screenshot Here -->
 
