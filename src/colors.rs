@@ -50,6 +50,16 @@ pub enum GradientMode {
     Linear,
 }
 
+impl From<&String> for GradientMode {
+    fn from(value: &String) -> Self {
+        match value.to_lowercase().as_str() {
+            "rainbow" => GradientMode::Rainbow,
+            "linear" => GradientMode::Linear,
+            _ => GradientMode::Rainbow,
+        }
+    }
+}
+
 /// Calculate the delta between the two RGB colors
 fn calculate_delta(start: &RGB<u8>, end: &RGB<u8>) -> RGB<f32> {
     RGB(
