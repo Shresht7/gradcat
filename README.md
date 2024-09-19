@@ -1,4 +1,4 @@
-`gradcat`
+# 🌈 `gradcat` 🐈
 
 A lolcat clone.
 
