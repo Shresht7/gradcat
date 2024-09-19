@@ -1,6 +1,6 @@
 # 🌈 `gradcat` 🐈
 
-A lolcat clone.
+A lolcat clone. 'Cuz why not?
 
 <!-- TODO: Screenshot Here -->
 
