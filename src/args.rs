@@ -110,7 +110,9 @@ impl Args {
     pub fn help_message(&self) -> String {
         let mut help_message = String::new();
 
-        help_message.push_str("Usage: gradcat [FILES...] [OPTIONS]\n");
+        let name = env!("CARGO_PKG_NAME");
+
+        help_message.push_str(&format!("Usage: {} [FILES...] [OPTIONS]\n", name));
         help_message.push_str("\n");
         help_message.push_str("Options: \n");
         help_message.push_str("  --mode <mode>\tSet the gradient mode (rainbow, linear)\n");
@@ -132,6 +134,6 @@ impl Args {
     }
 
     pub fn version(&self) -> String {
-        format!("v{}", "0.1.0")
+        format!("v{}", env!("CARGO_PKG_VERSION"))
     }
 }
