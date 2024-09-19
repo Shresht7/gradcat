@@ -1,6 +1,6 @@
 # 🌈 `gradcat` 🐈
 
-A lolcat clone. 'Cuz why not?
+A [lolcat][lolcat] clone. 'Cuz why not?
 
 <!-- TODO: Screenshot Here -->
 
@@ -38,3 +38,6 @@ Options:
 ## 📄 License
 
 This project is licensed under the [MIT License](./LICENSE). Read the [LICENSE](./LICENSE) file for more details.
+
+<!-- LINKS -->
+[lolcat]: https://github.com/busyloop/lolcat
