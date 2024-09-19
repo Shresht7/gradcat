@@ -35,12 +35,12 @@ impl App {
     /// Run the command-line application
     fn run(&self) -> Result<(), Box<dyn std::error::Error>> {
         if self.args.show_help {
-            print!("{}", self.args.help_message());
+            self.cat(std::io::Cursor::new(self.args.help_message()));
             return Ok(());
         }
 
         if self.args.show_version {
-            print!("{}", self.args.version());
+            self.print_line(self.args.version());
             return Ok(());
         }
 
