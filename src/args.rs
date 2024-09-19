@@ -7,8 +7,15 @@ use std::{collections::HashMap, str::FromStr};
 pub struct Args {
     /// A vector containing all the file-paths to read
     pub files: Vec<std::path::PathBuf>,
+
     /// Operations Mode
     pub mode: GradientMode,
+
+    /// Rainbow gradient's sine-wave frequency (Higher values cause faster change in the pattern)
+    pub frequency: f32,
+    /// Rainbow gradient's spread value
+    pub spread: f32,
+
     /// Gradient's starting color
     pub start_color: RGB<u8>,
     /// Gradient's ending color
@@ -24,6 +31,8 @@ impl Args {
         Self {
             start_color: RGB(255, 0, 0),
             end_color: RGB(0, 0, 255),
+            frequency: 1.0,
+            spread: 3.0,
             ..Default::default()
         }
     }
@@ -55,6 +64,18 @@ impl Args {
             }
         }
 
+        if let Some(mode) = options.get("mode") {
+            itself.mode = mode.into();
+        }
+
+        if let Some(frequency) = options.get("frequency") {
+            itself.frequency = frequency.parse().expect("Invalid frequency value");
+        }
+
+        if let Some(spread) = options.get("spread") {
+            itself.spread = spread.parse().expect("Invalid spread value");
+        }
+
         // Parse options
         if let Some(start_color) = options.get("start-color") {
             if let Ok(val) = RGB::from_str(&start_color) {
@@ -66,10 +87,6 @@ impl Args {
             if let Ok(val) = RGB::from_str(&end_color) {
                 itself.end_color = val;
             }
-        }
-
-        if let Some(mode) = options.get("mode") {
-            itself.mode = mode.into();
         }
 
         if options.contains_key("help") {
