@@ -1,6 +1,10 @@
 [package]
 name = "gradcat"
+description = "A lolcat clone"
 version = "0.1.0"
 edition = "2021"
+author = "Shresht7"
+license = "MIT"
+
 
 [dependencies]
