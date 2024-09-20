@@ -2,8 +2,6 @@
 
 A [`lolcat`][lolcat] clone. 'Cuz why not?
 
-<!-- TODO: Screenshot Here -->
-
 ## 📘 Usage
 
 Give it a list of files to cat out or pipe it in through `stdin`.
