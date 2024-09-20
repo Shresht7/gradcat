@@ -108,27 +108,29 @@ impl Args {
     }
 
     pub fn help_message(&self) -> String {
-        let mut help_message = String::new();
-
         let name = env!("CARGO_PKG_NAME");
 
-        help_message.push_str(&format!("Usage: {} [FILES...] [OPTIONS]\n", name));
-        help_message.push_str("\n");
-        help_message.push_str("Options: \n");
-        help_message.push_str("  --mode <mode>\tSet the gradient mode (rainbow, linear)\n");
-        help_message.push_str("\n");
-        help_message
-        .push_str("  --frequency <#color>\tRainbow gradient's sine-wave frequency (Higher values cause faster change in the pattern)\n");
-        help_message.push_str("  --spread <#color>\tRainbow gradient's spread value\n");
-        help_message.push_str("\n");
-        help_message
-            .push_str("  --start-color <#color>\tSet the start color for the linear gradient\n");
-        help_message
-            .push_str("  --end-color <#color>\tSet the end color for the linear gradient\n");
-        help_message.push_str("\n");
-        help_message.push_str("\n");
-        help_message.push_str("  --help\tDisplay this help message\n");
-        help_message.push_str("  --version\tDisplay the version number\n");
+        let help_message = format!(
+            r#"Usage: {name} [FILES...] [OPTIONS]
+
+Options:
+    --mode <mode>           Set the gradient mode (rainbow, linear)
+
+    --frequency <value>     Rainbow gradient's sine-wave frequency (Higher values cause faster change in the pattern)
+    --spread <value>        Rainbow gradient's spread value
+
+    --start-color <color>   Set the start color for the linear gradient
+    --end-color <color>     Set the end color for the linear gradient
+
+
+    --help                  Display the help message
+    --version               Display the version number
+
+Examples:
+    • {name} ./README.md ./src/main.rs
+    • ls | {name}
+        "#
+        );
 
         help_message
     }
