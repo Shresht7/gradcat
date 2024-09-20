@@ -50,8 +50,8 @@ impl Args {
 
         // Collect all valid file-paths
         while let Some(arg) = args.next() {
-            if arg.starts_with("--") {
-                let key = arg.trim_start_matches("--").to_string();
+            if arg.starts_with("--") || arg.starts_with("-") {
+                let key = arg.trim_start_matches("-").to_string();
                 if let Some(value) = args.next() {
                     options.insert(key, value);
                 } else {
@@ -95,11 +95,11 @@ impl Args {
             }
         }
 
-        if options.contains_key("help") {
+        if options.contains_key("help") || options.contains_key("h") {
             itself.show_help = true;
         }
 
-        if options.contains_key("version") {
+        if options.contains_key("version") || options.contains_key("v") {
             itself.show_version = true;
         }
 
@@ -123,8 +123,8 @@ Options:
     --end-color <color>     Set the end color for the linear gradient
 
 
-    --help                  Display the help message
-    --version               Display the version number
+    --help, -h              Display the help message
+    --version, -v           Display the version number
 
 Examples:
     • {name} ./README.md ./src/main.rs
