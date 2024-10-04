@@ -46,7 +46,7 @@ impl Args {
     /// Parse the command-line arguments
     pub fn parse() -> Self {
         // Get the command line arguments
-        let mut args = std::env::args();
+        let mut args = std::env::args().peekable();
         args.next(); // Consume the path to the executable
 
         let mut itself = Args::default();
@@ -56,8 +56,13 @@ impl Args {
         while let Some(arg) = args.next() {
             if arg.starts_with("--") || arg.starts_with("-") {
                 let key = arg.trim_start_matches("-").to_string();
-                if let Some(value) = args.next() {
-                    options.insert(key, value);
+                if let Some(value) = args.peek() {
+                    if value.starts_with("-") {
+                        options.insert(key, String::from("true"));
+                    } else {
+                        options.insert(key, String::from(value));
+                        args.next(); // Consume the value as it was recorded
+                    }
                 } else {
                     options.insert(key, String::from("true"));
                 }
