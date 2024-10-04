@@ -18,9 +18,9 @@ pub struct Args {
     /// The starting offset value to shift the gradient's starting position
     pub offset: f32,
 
-    /// Gradient's starting color
+    /// Linear gradient's starting color
     pub start_color: RGB<u8>,
-    /// Gradient's ending color
+    /// Linear gradient's ending color
     pub end_color: RGB<u8>,
 
     /// Disable ANSI colors
@@ -52,23 +52,30 @@ impl Args {
         let mut itself = Args::default();
         let mut options = HashMap::new();
 
-        // Collect all valid file-paths
+        // Iterate over the arguments and parse them
         while let Some(arg) = args.next() {
+            // If this starts with - or --, then this is a flag
             if arg.starts_with("--") || arg.starts_with("-") {
                 let key = arg.trim_start_matches("-").to_string();
+
+                // Peek forward one argument to determine the kind of flag...
                 if let Some(value) = args.peek() {
+                    // ... If the next argument is a flag too, then treat the current one as a boolean
                     if value.starts_with("-") {
                         options.insert(key, String::from("true"));
                     } else {
+                        // ... otherwise, this argument is the value for the current flag.
                         options.insert(key, String::from(value));
                         args.next(); // Consume the value as it was recorded
                     }
                 } else {
+                    // If there is no next argument, then treat the current one as a boolean
                     options.insert(key, String::from("true"));
                 }
                 continue;
             }
 
+            // ... otherwise, this is a positional argument
             let path = std::path::PathBuf::from(arg);
             if std::path::Path::exists(&path) {
                 itself.files.push(path);
