@@ -1,6 +1,6 @@
 [package]
 name = "gradcat"
-description = "A lolcat clone"
+description = "Concatenate [FILES...] or STDIN and print to STDOUT with a color gradient"
 version = "0.1.0"
 edition = "2021"
 author = "Shresht7"

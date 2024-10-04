@@ -117,10 +117,13 @@ impl Args {
 
     pub fn help_message(&self) -> String {
         let name = env!("CARGO_PKG_NAME");
+        let description = env!("CARGO_PKG_DESCRIPTION");
 
         let help_message = format!(
             r#"
 Usage: {name} [FILES...] [OPTIONS]
+
+{description}
 
 Options:
     --mode <mode>           Set the gradient mode (rainbow, linear)
