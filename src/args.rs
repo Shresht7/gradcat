@@ -36,8 +36,9 @@ impl Args {
         Self {
             start_color: RGB(255, 0, 0),
             end_color: RGB(0, 0, 255),
+            offset: 15.0,
             frequency: 1.0,
-            spread: 3.0,
+            spread: 15.0,
             ..Default::default()
         }
     }

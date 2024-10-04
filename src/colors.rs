@@ -78,8 +78,8 @@ pub fn interpolate_linear_gradient(start: &RGB<u8>, end: &RGB<u8>, factor: f32) 
     RGB(r.round() as u8, g.round() as u8, b.round() as u8)
 }
 
-pub fn rainbow(offset: f32, frequency: f32, spread: f32, factor: f32) -> RGB<u8> {
-    let i = offset + factor * spread; // The current index, used to calculate the position on the sine wave.
+pub fn rainbow(offset: f32, frequency: f32, spread: f32, shift: f32) -> RGB<u8> {
+    let i = (offset + shift) / spread; // The current index, used to calculate the position on the sine wave.
 
     let amplitude = 127.0; // Amplitude of the sine wave. Describe the magnitude of the color.
     let shift_offset = 128.0; // Shifts the entire sine wave up so that it oscillates between 0 and 255 (128 + 127)

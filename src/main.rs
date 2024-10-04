@@ -40,7 +40,7 @@ impl App {
         }
 
         if self.args.show_version {
-            self.print_line(self.args.version());
+            self.print_line(self.args.version(), 0);
             return Ok(());
         }
 
@@ -62,9 +62,9 @@ impl App {
 
     /// Cat out the contents read
     fn cat(&self, reader: impl std::io::BufRead) {
-        for line in reader.lines() {
+        for (idx, line) in reader.lines().enumerate() {
             if let Ok(line) = line {
-                self.print_line(line);
+                self.print_line(line, idx);
             }
         }
         // Reset ANSI style at the end
@@ -74,7 +74,7 @@ impl App {
     }
 
     /// Style the characters and print-out the line
-    fn print_line(&self, line: String) {
+    fn print_line(&self, line: String, idx: usize) {
         // If the `NO_COLOR` flag or environment variable is set, then skip applying ANSI colors
         if self.args.no_color {
             println!("{}", line);
@@ -83,20 +83,18 @@ impl App {
 
         let length = line.chars().count();
         for (i, char) in line.chars().enumerate() {
-            let factor = i as f32 / (length - 1) as f32;
-
             //  Determine the color to style the character
             let color = match self.args.mode {
                 colors::GradientMode::Rainbow => colors::rainbow(
                     self.args.offset,
                     self.args.frequency,
                     self.args.spread,
-                    factor,
+                    i as f32 + idx as f32,
                 ),
                 colors::GradientMode::Linear => colors::interpolate_linear_gradient(
                     &self.args.start_color,
                     &self.args.end_color,
-                    factor,
+                    (i as f32) / (length - 1) as f32,
                 ),
             };
 
