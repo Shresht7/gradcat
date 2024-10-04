@@ -14,6 +14,8 @@ gradcat ./src/main.rs
 git log | gradcat
 ```
 
+### 📖 Help
+
 ![help](./screenshot.png)
 
 > [!NOTE]
