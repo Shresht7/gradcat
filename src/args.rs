@@ -142,6 +142,7 @@ Options:
 
     --frequency <value>     Rainbow gradient's sine-wave frequency (Higher values cause faster change in the pattern)
     --spread <value>        Rainbow gradient's spread value
+    --offset <value>        The starting offset value to shift the gradient's starting position
 
     --start-color <color>   Set the start color for the linear gradient
     --end-color <color>     Set the end color for the linear gradient
