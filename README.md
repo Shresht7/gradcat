@@ -20,7 +20,7 @@ git log | gradcat
 
 > [!NOTE]
 >
-> Respects the `NO_COLOR` environment variable. If it is set, or if `--no-color` flag is passed, ANSI colors will be disabled - printing only plain text output.
+> Respects the `NO_COLOR` environment variable. If it is set, or if `--no-color` flag is passed, ANSI colors will be disabled - printing only plain text output. Of course, that defeats the entire point of this silly command-line application.
 
 ---
 
