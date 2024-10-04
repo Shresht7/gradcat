@@ -140,8 +140,9 @@ Options:
     --version, -v           Display the version number
 
 Examples:
-    • {name} ./README.md ./src/main.rs
-    • ls | {name}
+    • {name} ./README.md ./src/main.rs      # Read from the given files
+    • ls | {name}                           # Read from STDIN
+    • {name} --mode linear --help           # Try out the various modes on this help message! 
         "#
         );
 
