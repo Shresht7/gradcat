@@ -67,11 +67,20 @@ impl App {
                 self.print_line(line);
             }
         }
-        print!("{}", ANSI_RESET);
+        // Reset ANSI style at the end
+        if !self.args.no_color {
+            print!("{}", ANSI_RESET);
+        }
     }
 
     /// Style the characters and print-out the line
     fn print_line(&self, line: String) {
+        // If the `NO_COLOR` flag or environment variable is set, then skip applying ANSI colors
+        if self.args.no_color {
+            println!("{}", line);
+            return;
+        }
+
         let length = line.chars().count();
         for (i, char) in line.chars().enumerate() {
             let factor = i as f32 / (length - 1) as f32;

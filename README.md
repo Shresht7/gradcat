@@ -16,6 +16,10 @@ git log | gradcat
 
 ![help](./screenshot.png)
 
+> [!NOTE]
+>
+> Respects the `NO_COLOR` environment variable. If it is set, or if `--no-color` flag is passed, ANSI colors will be disabled - printing only plain text output.
+
 ---
 
 ## 📄 License

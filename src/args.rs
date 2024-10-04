@@ -23,6 +23,9 @@ pub struct Args {
     /// Gradient's ending color
     pub end_color: RGB<u8>,
 
+    /// Disable ANSI colors
+    pub no_color: bool,
+
     pub show_help: bool,
     pub show_version: bool,
 }
@@ -95,6 +98,10 @@ impl Args {
             }
         }
 
+        if options.contains_key("no-color") || std::env::var("NO_COLOR").is_ok() {
+            itself.no_color = true;
+        }
+
         if options.contains_key("help") || options.contains_key("h") {
             itself.show_help = true;
         }
@@ -122,6 +129,7 @@ Options:
     --start-color <color>   Set the start color for the linear gradient
     --end-color <color>     Set the end color for the linear gradient
 
+    --no-color              Disable ANSI colors
 
     --help, -h              Display the help message
     --version, -v           Display the version number
