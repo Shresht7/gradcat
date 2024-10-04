@@ -118,7 +118,8 @@ impl Args {
         let name = env!("CARGO_PKG_NAME");
 
         let help_message = format!(
-            r#"Usage: {name} [FILES...] [OPTIONS]
+            r#"
+Usage: {name} [FILES...] [OPTIONS]
 
 Options:
     --mode <mode>           Set the gradient mode (rainbow, linear)
